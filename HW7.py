@@ -54,10 +54,11 @@ def make_positions_table(data, cur, conn):
 
 def make_players_table(data, cur, conn):
     cur.execute("CREATE TABLE IF NOT EXISTS Players (id INTEGER PRIMARY KEY, name TEXT UNIQUE, position_id INTEGER, birthyear INTEGER, nationality TEXT, FOREIGN KEY (position_id) REFERENCES Positions(id))")
-    for player in data.get('squad'):
-        pos = player.get('position')
-        posid = cur.execute("SELECT id FROM Positions WHERE Positions.position = ?",[pos]).fetchone()[0]
-        cur.execute("INSERT OR IGNORE INTO Players (id, name, position_id, birthyear, nationality) VALUES (?,?,?,?,?)",(player.get('id'), player.get("name"),posid, player.get("dateOfBirth").split('-')[0], player.get("nationality")))
+    for player in data.get("squad"):
+        pos = player.get("position")
+        posid = cur.execute("SELECT id FROM Positions WHERE Positions.position = ?",[pos])
+        posid = posid.fetchone()[0]
+        cur.execute("INSERT OR IGNORE INTO Players (id, name, position_id, birthyear, nationality) VALUES (?,?,?,?,?)",(player.get("id"), player.get("name"),posid, player.get("dateOfBirth").split('-')[0], player.get("nationality")))
     conn.commit()
     
 ## [TASK 2]: 10 points
