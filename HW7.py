@@ -116,7 +116,7 @@ def birthyear_nationality_search(age, country, cur, conn):
 def position_birth_search(position, age, cur, conn):
     year = 2023 - age
     cur.execute("""SELECT Players.name, Positions.position, Players.birthyear FROM Players JOIN Positions ON Players.position_id = Positions.id WHERE Positions.position = ? AND Players.birthyear > ?""", (position, year))
-    return cur.fetchall()
+    return cur.fetchall() 
 
 
 # [EXTRA CREDIT]
